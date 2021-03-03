@@ -20,6 +20,11 @@ def home():
     return render_template("index.html", title=titles, subtitle=subtitles, img=imgs, link=links)
 
 
+@app.route("/school")
+def school():
+    return render_template("school.html")
+
+
 @app.route("/edit/<link>")
 def edit(link):
     try:
@@ -35,8 +40,7 @@ def edit(link):
         content = f'<div class="editor">{firebase.get("link", link)["content"]}</div>'
         return render_template("edit.html", content=Markup(content), detail=detail)
     except:
-        return render_template_string(
-            '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>')
+        return render_template("404.html")
 
 
 @app.route("/<link>")
@@ -54,8 +58,7 @@ def details(link):
         content = firebase.get("link", link)["content"]
         return render_template("thing.html", content=Markup(content), detail=detail)
     except:
-        return render_template_string(
-            '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>')
+        return render_template("404.html")
 
 
 @app.route("/admin", methods=["GET", "POST"])

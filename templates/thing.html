@@ -1,6 +1,7 @@
 <html>
     <head>
         <link href="{{ url_for('static', filename='prism.css') }}" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/28b61cd0cb.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <title>Wong's Studio Learning</title>
         <style>
@@ -34,21 +35,51 @@
                   </li>
                 </ul>
                 <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
+                  <a href="/admin" class="btn btn-outline-success">Add Post</a>
                 </form>
               </div>
             </div>
           </nav>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure to delete {{detail["title"]}} ?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="deletePost()">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <section>
             <div style="text-align: center">
                 <h1>{{detail["title"]}}</h1>
             </div>
-{{content}}
-            <div style="width:100%; text-align:right;">
-                <a href="/edit/{{detail['link']}}" class="btn btn-primary">Edit Post</a><br><br>
+            <div style="width: 100%; text-align: right; ">
+                <a href="/edit/{{detail['link']}}"><i class="far fa-edit"></i></a> &nbsp;&nbsp;
+                <a href="#"><i class="far fa-trash-alt" data-bs-toggle="modal" data-bs-target="#exampleModal" ></i></a>
+            </div>
+            <div>
+{{content}}
             </div>
         </section>
+        <script>
+            var myModal = document.getElementById('myModal')
+            var myInput = document.getElementById('myInput')
+            var gid = "{{detail["id"]}}"
+            var glink = "{{detail["link"]}}"
+            myModal.addEventListener('shown.bs.modal', function () {
+              myInput.focus()
+            })
+
+        </script>
         <script src="{{ url_for('static', filename='ckeditor.js') }}"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>

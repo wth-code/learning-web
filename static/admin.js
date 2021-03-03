@@ -71,7 +71,13 @@ ClassicEditor
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
-
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
 
 function data() {
     var link = document.getElementById("link").value;
@@ -91,9 +97,20 @@ function data() {
 		"img": `${img}`,
 		"link": `${link}`
       });
-	  document.getElementById("link").value = ""
-	  document.getElementById("title").value = ""
-	  document.getElementById("subtitle").value = ""
-	  document.getElementById("img").value = ""
+	  document.getElementById("link").value = "";
+	  document.getElementById("title").value = "";
+	  document.getElementById("subtitle").value = "";
+	  document.getElementById("img").value = "";
 	  editor.setData("");
+	  alert("Done !");
     }
+
+function deletePost() {
+    firebase.database().ref(`home/${gid}`).remove();
+    firebase.database().ref(`link/${glink}`).remove();
+    alert("Deleted !");
+    wait(1000);
+    window.location.href = "../";
+}
+
+
