@@ -84,14 +84,20 @@ function data() {
     var title = document.getElementById("title").value;
     var subtitle = document.getElementById("subtitle").value;
     var img = document.getElementById("img").value;
+    var genre = document.getElementById("genre").value;
     if (link == "" || title == "" || subtitle == "" || img == "") {
 		alert("You Must Fill in all the things! ");
+		return null;
+	}
+	if (genre == "Select Genre") {
+	    alert("Please select a genre! ");
 		return null;
 	}
     firebase.database().ref('link/' + link).set({
         "content": `${editor.getData()}`
       });
 	firebase.database().ref().child('home').push({
+	    "genre": `${genre}`,
         "title": `${title}`,
 		"subtitle": `${subtitle}`,
 		"img": `${img}`,

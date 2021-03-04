@@ -49,6 +49,13 @@
             <input id="link" placeholder="Link ID" class="form-control" value="{{detail['link']}}"><br>
           </div>
         </div>
+            <div style="width: 100%; text-align: left;">
+            <select name="genre" id="genre">
+              <option value="Select Genre" id="select">Select Genre</option>
+              <option value="code" id="code">Code</option>
+              <option value="school" id="school">School</option>
+            </select>
+            </div><br>
 {{content}}
             <br><br>
         <div style="width:100%; text-align:right;">
@@ -58,6 +65,12 @@
         </section>
         <script>
             var id = "{{detail["id"]}}"
+            if ("{{detail['genre']}}" == "code") {
+                document.getElementById("genre").selectedIndex = 1;
+            }
+            else {
+                document.getElementById("genre").selectedIndex = 2;
+            }
         </script>
         <script src="{{ url_for('static', filename='ckeditor.js') }}"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase.js"></script>

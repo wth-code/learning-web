@@ -13,16 +13,17 @@ def home():
     imgs = []
     links = []
     for i in results:
-        titles.append(results[i]["title"])
-        subtitles.append(results[i]["subtitle"])
-        imgs.append(results[i]["img"])
-        links.append(results[i]["link"])
+        if results[i]["genre"] == "code":
+            titles.append(results[i]["title"])
+            subtitles.append(results[i]["subtitle"])
+            imgs.append(results[i]["img"])
+            links.append(results[i]["link"])
     return render_template("index.html", title=titles, subtitle=subtitles, img=imgs, link=links)
 
 
 @app.route("/school")
 def school():
-    return render_template("school.html")
+    return render_template("school-home.html")
 
 
 @app.route("/edit/<link>")
@@ -36,7 +37,8 @@ def edit(link):
                           "subtitle": data[i]["subtitle"],
                           "img": data[i]["img"],
                           "link": data[i]["link"],
-                          "id": i}
+                          "id": i,
+                          "genre": data[i]["genre"]}
         content = f'<div class="editor">{firebase.get("link", link)["content"]}</div>'
         return render_template("edit.html", content=Markup(content), detail=detail)
     except:
